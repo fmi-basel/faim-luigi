@@ -21,6 +21,8 @@ class ImageTargetBase(abc.ABC):
 class TiffImageTarget(luigi.LocalTarget, ImageTargetBase):
     '''provides load and save utilities for local tiff image file targets.
 
+    Uses skimage.external.tifffile.
+
     '''
 
     def load(self):

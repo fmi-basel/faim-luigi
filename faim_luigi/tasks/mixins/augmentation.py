@@ -1,6 +1,10 @@
-import tensorflow as tf
+'''Luigi.Task mixin for data augmentation.
 
+'''
+import tensorflow as tf
 import luigi
+
+# TODO These tf-augmentation functions should be moved to dlutils.
 
 
 def random_axis_flip(axis, flip_prob):
@@ -15,10 +19,15 @@ def random_axis_flip(axis, flip_prob):
                                       minval=0,
                                       maxval=1,
                                       dtype=tf.float32)
+
+        # NOTE the cell-var-from-loop warning is disabled as the lambdas
+        # are executed immediately by tf.cond and thus, evaluation happens
+        # when val is still the *current* val. Tested with tensorflow 1.14.
         return {
-            key:
-            tf.cond(draw_prob >=
-                    flip_prob, lambda: tf.reverse(val, [axis]), lambda: val)
+            key: tf.cond(
+                draw_prob <= flip_prob,
+                lambda: tf.reverse(val, [axis]),  # pylint: disable = W0640
+                lambda: val)  # pylint: disable = W0640
             for key, val in input_dict.items()
         }
 
@@ -68,19 +77,21 @@ def gaussian_offset(offset_sigma, keys):
 
 
 class AugmentationMixin:
-    '''
-    '''
+    '''Adds parameters for augmentation functions to task.
 
+    '''
     # augmentation params
     augmentation_with_flips = luigi.BoolParameter(default=False)
     augmentation_gaussian_noise_sigma = luigi.FloatParameter(default=0)
     augmentation_gaussian_noise_mu = luigi.FloatParameter(default=0)
     augmentation_offset_sigma = luigi.FloatParameter(default=0)
 
-    keys = ['img']
+    # determines which entries are to be treated as inputs
+    input_keys = luigi.ListParameter(default=['img'])
 
     def _get_dimensions(self):
-        '''
+        '''guess along how many dimensions to flip.
+
         '''
         try:
             return len(self.patch_size)
@@ -89,7 +100,9 @@ class AugmentationMixin:
             return 2
 
     def get_augmentations(self):
-        '''
+        '''get a list of augmentation functions parametrized by the given
+        values.
+
         '''
         augmentations = []
         if self.augmentation_with_flips:

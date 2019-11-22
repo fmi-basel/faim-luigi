@@ -1,14 +1,13 @@
-import luigi
-
+'''
+'''
 import os
 
-from keras.callbacks import ModelCheckpoint
+import luigi
 from keras.callbacks import TensorBoard
 from keras.callbacks import LearningRateScheduler
 from keras.callbacks import TerminateOnNaN
 from keras.callbacks import EarlyStopping
 
-from dlutils.training.callbacks import ModelConfigSaver
 from dlutils.training.scheduler import CosineAnnealingSchedule
 
 
@@ -19,7 +18,9 @@ def common_callbacks(output_folder,
                      n_restarts=1,
                      restart_decay=0.5,
                      patience=None):
-    '''
+    '''creates several keras callbacks to be used in model.fit or
+    model.fit_generator.
+
     '''
     n_restarts = max(1, n_restarts)
     epochs_to_restart = epochs / n_restarts
@@ -27,14 +28,6 @@ def common_callbacks(output_folder,
     # TODO Add restarts as parameter
 
     callbacks = [
-        ModelConfigSaver(os.path.join(output_folder,
-                                      'model_architecture.yaml')),
-        ModelCheckpoint(os.path.join(output_folder, 'model_best.h5'),
-                        save_best_only=True,
-                        save_weights_only=True),
-        ModelCheckpoint(os.path.join(output_folder, 'model_latest.h5'),
-                        save_best_only=False,
-                        save_weights_only=True),
         LearningRateScheduler(
             CosineAnnealingSchedule(lr_max=lr_max,
                                     lr_min=lr_min,
@@ -65,7 +58,9 @@ class TrainingMixin:
     train_epochs = luigi.IntParameter()
 
     def common_callbacks(self, output_folder):
-        '''
+        '''creates several keras callbacks to be used in model.fit or
+        model.fit_generator.
+
         '''
         return common_callbacks(output_folder=output_folder,
                                 lr_min=self.train_learning_rate_min,

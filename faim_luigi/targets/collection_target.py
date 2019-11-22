@@ -1,6 +1,5 @@
 from glob import glob
 import os
-import re
 import logging
 
 import luigi
