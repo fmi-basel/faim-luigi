@@ -1,4 +1,5 @@
-'''
+'''Mixin for training tasks.
+
 '''
 import os
 
@@ -24,8 +25,6 @@ def common_callbacks(output_folder,
     '''
     n_restarts = max(1, n_restarts)
     epochs_to_restart = epochs / n_restarts
-
-    # TODO Add restarts as parameter
 
     callbacks = [
         LearningRateScheduler(
@@ -53,9 +52,20 @@ class TrainingMixin:
 
     '''
     train_learning_rate = luigi.FloatParameter()
+    '''training learning rate (initial).
+    '''
+
     train_learning_rate_min = luigi.FloatParameter()
-    train_patience = luigi.IntParameter()
+    '''training learning rate (minimum, at end)
+    '''
+
     train_epochs = luigi.IntParameter()
+    '''number of epochs to train.
+    '''
+
+    train_patience = luigi.IntParameter()
+    '''number of iterations without improvement until early termination.
+    '''
 
     def common_callbacks(self, output_folder):
         '''creates several keras callbacks to be used in model.fit or

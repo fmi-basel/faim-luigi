@@ -4,7 +4,7 @@ from glob import glob
 
 import luigi
 
-from ..targets.collection_target import CollectionTarget
+from faim_luigi.targets.collection_target import CollectionTarget
 
 
 class DataCollectorTask(luigi.Task):
