@@ -46,8 +46,6 @@ class FileCollectorTask(luigi.ExternalTask):
                 self.file_pattern, self.input_folder))
 
         targets = [self.make_target(path) for path in paths]
-        print('Collected {} targets'.format(len(targets)))
-
         return targets
 
 
