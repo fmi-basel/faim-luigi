@@ -15,10 +15,8 @@ def random_axis_flip(axis, flip_prob):
     def _flipper(input_dict):
         '''
         '''
-        draw_prob = tf.random.uniform(shape=[],
-                                      minval=0,
-                                      maxval=1,
-                                      dtype=tf.float32)
+        draw_prob = tf.random.uniform(
+            shape=[], minval=0, maxval=1, dtype=tf.float32)
 
         # NOTE the cell-var-from-loop warning is disabled as the lambdas
         # are executed immediately by tf.cond and thus, evaluation happens
@@ -50,9 +48,8 @@ def gaussian_noise(noise_mu, noise_sigma, keys):
 
         for key in keys:
             image = input_dict[key]
-            noise = tf.random_normal(shape=tf.shape(image),
-                                     mean=0,
-                                     stddev=sigma)
+            noise = tf.random_normal(
+                shape=tf.shape(image), mean=0, stddev=sigma)
             input_dict[key] = image + noise
         return input_dict
 
@@ -114,11 +111,12 @@ class AugmentationMixin:
             augmentations.append(
                 gaussian_noise(self.augmentation_gaussian_noise_mu,
                                self.augmentation_gaussian_noise_sigma,
-                               self.keys))
+                               self.input_keys))
 
         if abs(self.augmentation_offset_sigma) >= 1e-8:
             augmentations.append(
-                gaussian_offset(self.augmentation_offset_sigma, self.keys))
+                gaussian_offset(self.augmentation_offset_sigma,
+                                self.input_keys))
 
         print('\nAdded augmentations: ')
         for augmentation in augmentations:
