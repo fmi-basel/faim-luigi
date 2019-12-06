@@ -105,9 +105,10 @@ class Collection:
 
         # collect images and store them in database
         for folder, fname in image_locator_fn():
-            image = ImageData(folder=folder,
-                              fname=fname,
-                              is_in_training=split_fn(folder, fname))
+            image = ImageData(
+                folder=folder,
+                fname=fname,
+                is_in_training=split_fn(folder, fname))
             image.mask = [
                 ImageAnnotationData(folder=folder, fname=fname)
                 for folder, fname in mask_locator_fn(image.folder, image.fname)

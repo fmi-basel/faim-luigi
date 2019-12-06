@@ -28,16 +28,18 @@ def common_callbacks(output_folder,
 
     callbacks = [
         LearningRateScheduler(
-            CosineAnnealingSchedule(lr_max=lr_max,
-                                    lr_min=lr_min,
-                                    epoch_max=epochs_to_restart,
-                                    reset_decay=restart_decay)),
+            CosineAnnealingSchedule(
+                lr_max=lr_max,
+                lr_min=lr_min,
+                epoch_max=epochs_to_restart,
+                reset_decay=restart_decay)),
         TerminateOnNaN(),
-        TensorBoard(os.path.join(output_folder, 'tensorboard-logs'),
-                    write_graph=True,
-                    write_grads=False,
-                    write_images=False,
-                    histogram_freq=0)
+        TensorBoard(
+            os.path.join(output_folder, 'tensorboard-logs'),
+            write_graph=True,
+            write_grads=False,
+            write_images=False,
+            histogram_freq=0)
     ]
 
     if patience >= 1 and patience is not None:
@@ -72,8 +74,9 @@ class TrainingMixin:
         model.fit_generator.
 
         '''
-        return common_callbacks(output_folder=output_folder,
-                                lr_min=self.train_learning_rate_min,
-                                lr_max=self.train_learning_rate,
-                                patience=self.train_patience,
-                                epochs=self.train_epochs)
+        return common_callbacks(
+            output_folder=output_folder,
+            lr_min=self.train_learning_rate_min,
+            lr_max=self.train_learning_rate,
+            patience=self.train_patience,
+            epochs=self.train_epochs)
