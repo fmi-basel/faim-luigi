@@ -72,9 +72,10 @@ class KerasModelTarget(luigi.LocalTarget):
         return [
             ModelConfigSaver(os.path.join(self.path, self.architecture_fname)),
         ] + [
-            ModelCheckpoint(os.path.join(self.path, fname),
-                            save_best_only=key == 'best',
-                            save_weights_only=True)
+            ModelCheckpoint(
+                os.path.join(self.path, fname),
+                save_best_only=key == 'best',
+                save_weights_only=True)
             for key, fname in self.weights_fname.items()
         ]
 
