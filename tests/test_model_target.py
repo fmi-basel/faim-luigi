@@ -2,9 +2,9 @@ import pytest
 import numpy as np
 import scipy
 
-from keras.models import Sequential
-from keras.layers import Conv1D
-from keras.optimizers import SGD
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv1D
+from tensorflow.keras.optimizers import SGD
 
 from faim_luigi.targets.model_targets import KerasModelTarget
 

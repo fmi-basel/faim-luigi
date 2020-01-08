@@ -16,9 +16,8 @@ setup(
     ]),
     install_requires=[
         'luigi',
-        'keras',
 #        'dlutils',  # TODO add version
         'sqlalchemy',
-        'tensorflow',  # TODO could potentially be replaced by dlutils
+#        'tensorflow',  # TODO could potentially be replaced by dlutils
         'scikit-image'
     ])

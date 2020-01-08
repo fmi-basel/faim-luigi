@@ -2,10 +2,9 @@ import os
 import abc
 
 import luigi
-from keras.callbacks import ModelCheckpoint
 
 from dlutils.models import load_model
-from dlutils.training.callbacks import ModelConfigSaver
+from dlutils.training.callbacks import ModelConfigSaver, ModelCheckpoint
 
 
 class TrainableModelTargetMixin(abc.ABC):

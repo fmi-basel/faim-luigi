@@ -4,10 +4,11 @@
 import os
 
 import luigi
-from keras.callbacks import TensorBoard
-from keras.callbacks import LearningRateScheduler
-from keras.callbacks import TerminateOnNaN
-from keras.callbacks import EarlyStopping
+
+from dlutils.training.callbacks import TensorBoard
+from dlutils.training.callbacks import LearningRateScheduler
+from dlutils.training.callbacks import TerminateOnNaN
+from dlutils.training.callbacks import EarlyStopping
 
 from dlutils.training.scheduler import CosineAnnealingSchedule
 
