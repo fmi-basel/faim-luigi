@@ -8,7 +8,7 @@ import luigi
 from dlutils.training.callbacks import TensorBoard
 from dlutils.training.callbacks import LearningRateScheduler
 from dlutils.training.callbacks import TerminateOnNaN
-from dlutils.training.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 
 from dlutils.training.scheduler import CosineAnnealingSchedule
 
