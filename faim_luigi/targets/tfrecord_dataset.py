@@ -50,19 +50,31 @@ class TFRecordDatasetTarget:
     def _validation_pattern(self):
         return os.path.join(self.validation_folder, self._fname_pattern)
 
-    def load(self, batch_size, patch_size=None, augmentations=[]):
-        '''returns tf.data.Dataset created from the tfrecords.
-
+    def load_validation(self, batch_size, **kwargs):
         '''
-        training_dataset = create_dataset_for_training(
+        '''
+        return create_dataset_for_validation(
+            self._validation_pattern, batch_size, self.parser.parse, **kwargs)
+
+    def load_training(self, batch_size, patch_size, augmentations=[], **kwargs):
+        '''
+        '''
+        if kwargs.get('transforms') is not None:
+            augmentations.extend(kwargs.pop('transforms'))
+        return create_dataset_for_training(
             self._training_pattern,
             batch_size,
             self.parser.parse,
             patch_size=patch_size,
-            transforms=augmentations)
+            transforms=augmentations,
+            **kwargs)
 
-        validation_dataset = create_dataset_for_validation(
-            self._validation_pattern, batch_size, self.parser.parse)
+    def load(self, batch_size, patch_size=None, augmentations=[], **kwargs):
+        '''returns tf.data.Dataset created from the tfrecords.
+
+        '''
+        training_dataset = self.load_training(batch_size, patch_size, augmentations, **kwargs)
+        validation_dataset = self.load_validation(batch_size, **kwargs)
 
         return training_dataset, validation_dataset
 

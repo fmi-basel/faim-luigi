@@ -40,7 +40,7 @@ def common_callbacks(output_folder,
             write_graph=True,
             write_grads=False,
             write_images=False,
-            histogram_freq=0)
+            histogram_freq=0),
     ]
 
     if patience >= 1 and patience is not None:
@@ -75,9 +75,14 @@ class TrainingMixin:
         model.fit_generator.
 
         '''
-        return common_callbacks(
+        callbacks = common_callbacks(
             output_folder=output_folder,
             lr_min=self.train_learning_rate_min,
             lr_max=self.train_learning_rate,
             patience=self.train_patience,
             epochs=self.train_epochs)
+        try:
+            callbacks.extend(self.output().get_modelcheckpoint_callbacks(output_folder))
+        except:
+            logging.getLogger('luigi-interface').warn('Could not get model checkpoint callbacks from target.')
+        return callbacks

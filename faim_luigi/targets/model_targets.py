@@ -64,22 +64,24 @@ class KerasModelTarget(luigi.LocalTarget):
             for weights in self.weights_fname.values()
             for fname in [weights, self.architecture_fname])
 
-    def get_modelcheckpoint_callbacks(self):
+    def get_modelcheckpoint_callbacks(self, folder=None):
         '''returns a list of callbacks for training that
         will save the model.
 
         '''
+        if folder is None:
+            folder = self.path
         return [
-            ModelConfigSaver(os.path.join(self.path, self.architecture_fname)),
+            ModelConfigSaver(os.path.join(folder, self.architecture_fname)),
         ] + [
             ModelCheckpoint(
-                os.path.join(self.path, fname),
+                os.path.join(folder, fname),
                 save_best_only=key == 'best',
                 save_weights_only=True)
             for key, fname in self.weights_fname.items()
         ]
 
-    def load(self, best=False):
+    def load(self, best=False, **kwargs):
         '''
         '''
         path = os.path.join(self.path,
@@ -88,4 +90,4 @@ class KerasModelTarget(luigi.LocalTarget):
             raise FileNotFoundError(
                 'The weights file for best={}: {} does not exist!'.format(
                     best, self.weights_fname['best' if best else 'latest']))
-        return load_model(path)
+        return load_model(path, **kwargs)
