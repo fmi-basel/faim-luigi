@@ -88,7 +88,7 @@ class TFRecordDatasetTarget:
 
         train_records = sum(1 for _ in glob(self._training_pattern))
 
-        if train_records <= 1:
+        if train_records <= 0:
             return False
 
         return True
