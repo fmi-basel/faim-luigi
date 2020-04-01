@@ -70,6 +70,8 @@ class TrainingMixin:
     '''number of iterations without improvement until early termination.
     '''
 
+    train_restarts = luigi.IntParameter(default=1)
+
     def common_callbacks(self, output_folder):
         '''creates several keras callbacks to be used in model.fit or
         model.fit_generator.
@@ -80,7 +82,9 @@ class TrainingMixin:
             lr_min=self.train_learning_rate_min,
             lr_max=self.train_learning_rate,
             patience=self.train_patience,
-            epochs=self.train_epochs)
+            epochs=self.train_epochs,
+            n_restarts=self.train_restarts
+        )
         try:
             callbacks.extend(self.output().get_modelcheckpoint_callbacks(output_folder))
         except:
