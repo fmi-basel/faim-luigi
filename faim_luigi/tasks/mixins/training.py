@@ -27,13 +27,17 @@ def common_callbacks(output_folder,
     n_restarts = max(1, n_restarts)
     epochs_to_restart = epochs / n_restarts
 
-    callbacks = [
-        LearningRateScheduler(
-            CosineAnnealingSchedule(
-                lr_max=lr_max,
-                lr_min=lr_min,
-                epoch_max=epochs_to_restart,
-                reset_decay=restart_decay)),
+    callbacks = []
+
+    if lr_max != lr_min:
+        callbacks.append(LearningRateScheduler(
+        CosineAnnealingSchedule(
+            lr_max=lr_max,
+            lr_min=lr_min,
+            epoch_max=epochs_to_restart,
+            reset_decay=restart_decay)))
+
+    callbacks.extend([
         TerminateOnNaN(),
         TensorBoard(
             os.path.join(output_folder, 'tensorboard-logs'),
@@ -41,7 +45,7 @@ def common_callbacks(output_folder,
             write_grads=False,
             write_images=False,
             histogram_freq=0),
-    ]
+    ])
 
     if patience >= 1 and patience is not None:
         callbacks.append(EarlyStopping(patience=patience))
