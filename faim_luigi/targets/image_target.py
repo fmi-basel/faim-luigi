@@ -12,7 +12,7 @@ class ImageTargetBase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def save(self, vals):
+    def save(self, vals, **kwargs):
         '''
         '''
         pass
@@ -30,8 +30,8 @@ class TiffImageTarget(luigi.LocalTarget, ImageTargetBase):
         '''
         return imread(self.path)
 
-    def save(self, vals):
+    def save(self, vals, **kwargs):
         '''
         '''
         with self.temporary_path() as path:
-            imsave(path, vals)
+            imsave(path, vals, **kwargs)
