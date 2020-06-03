@@ -19,5 +19,5 @@ setup(
 #        'dlutils',  # TODO add version
         'sqlalchemy',
 #        'tensorflow',  # TODO could potentially be replaced by dlutils
-        'scikit-image'
+        'scikit-image==0.16.2'
     ])
