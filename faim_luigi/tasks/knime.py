@@ -47,7 +47,7 @@ def format_workflow_arg(path_to_workflow: str):
     '''
     if os.path.isdir(path_to_workflow):
         return '-workflowDir={}'.format(path_to_workflow)
-    if os.path.splitext(path_to_workflow)[1].lower() == '.zip':
+    if os.path.splitext(path_to_workflow)[1].lower() in ['.zip', '.knwf']:
         return '-workflowFile={}'.format(path_to_workflow)
 
     raise RuntimeError(
