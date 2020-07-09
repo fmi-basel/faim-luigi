@@ -7,7 +7,7 @@ contrib = [
 # setup.
 setup(
     name='faim-luigi',
-    version='0.0.1',
+    version='0.1.0',
     description='faim-luigi',
     author=', '.join(contrib),
     packages=find_packages(exclude=[
