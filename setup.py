@@ -7,7 +7,7 @@ contrib = [
 # setup.
 setup(
     name='faim-luigi',
-    version='0.1.0',
+    version='0.1.1',
     description='faim-luigi',
     author=', '.join(contrib),
     packages=find_packages(exclude=[
@@ -16,6 +16,7 @@ setup(
     ]),
     install_requires=[
         'luigi',
+        'tifffile==2020.5.30',
 #        'dlutils',  # TODO add version
         'sqlalchemy',
 #        'tensorflow',  # TODO could potentially be replaced by dlutils

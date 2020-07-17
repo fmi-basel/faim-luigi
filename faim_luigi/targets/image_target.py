@@ -1,7 +1,7 @@
 import abc
 import luigi
 
-from skimage.external.tifffile import imread, imsave
+from tifffile import imread, imsave
 
 
 class ImageTargetBase(abc.ABC):
