@@ -1,0 +1,49 @@
+
+{
+    "type": "object",
+    "properties": {
+        "inputTable-2": {
+            "type": "object",
+            "properties": {
+                "table-spec": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "filepath": {
+                                "type": "string",
+                                "default": "string"
+                            }
+                        }
+                    }
+                },
+                "table-data": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "default": "test1.txt"
+                        }
+                    }
+                }
+            },
+            "description": "",
+            "example": {
+                "table-spec": [
+                    {
+                        "filepath": "string"
+                    }
+                ],
+                "table-data": [
+                    [
+                        "test1.txt"
+                    ],
+                    [
+                        "test2.txt"
+                    ]
+                ]
+            }
+        }
+    }
+}
