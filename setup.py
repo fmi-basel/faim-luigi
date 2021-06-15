@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 
 contrib = [
     'Markus Rempfler',
+    'Jan Eglinger',
 ]
 
 # setup.
@@ -16,9 +17,11 @@ setup(
     ]),
     install_requires=[
         'luigi',
-        'tifffile==2020.5.30',
+        'knime',
+        'tifffile>=2020.5.30',
 #        'dlutils',  # TODO add version
         'sqlalchemy',
+        'pandas',
 #        'tensorflow',  # TODO could potentially be replaced by dlutils
-        'scikit-image==0.16.2'
+        'scikit-image>=0.16.2'
     ])
